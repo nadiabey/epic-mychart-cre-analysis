@@ -1,5 +1,5 @@
 # epic-mychart-cre-analysis
-Analyzing computer-readable exports from Epic MyChart. CREs come in a .zip file that expand into two folders: EHITables (tsv files containing data) and EHITables Schema (htm files containing documentation). 
+Analyzing computer-readable exports from Epic MyChart (mine and my family's, with permission). CREs come in a .zip file that expand into two folders: EHITables (tsv files containing data) and EHITables Schema (htm files containing documentation). 
 
 Types of identifiers: account ID (billing), patient ID, patient MRN, record ID (claims), etc.
 
