@@ -19,3 +19,7 @@ Some significant tables:
 * ORDER_PROC, ORDER_PROC_2, ORDER_PROC_3, ORDER_PROC_4, ORDER_PROC_5, ORDER_PROC_6: procedures ordered and details about provider
 * ORDER_RESULTS: results of procedures/tests
 * PR_EST_INFO: price estimates
+
+Things I've learned during this:
+* Line item charges can often differ for the same billing code.
+* There may be multiple remittance images on the same invoice/encounter.
