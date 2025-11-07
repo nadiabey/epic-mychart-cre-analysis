@@ -1,5 +1,12 @@
 """
-the 2026 proposed hospital price transparency rule requires hospitals to disclose the 10th percentile, median, and 90th percentile price for all offered services in standard charge machine-readable files using remittance data. if the calculated median/percentile is not a real price, the value must be replaced with the closest real price. this uses remittance tables from epic to estimate these benchmarks for each unique billing code.
+created 11/6/25
+the 2026 proposed hospital price transparency rule requires hospitals to disclose the 
+10th percentile, median, and 90th percentile price for all offered services in standard 
+charge machine-readable files using remittance data. if the calculated median/percentile is not a real price, 
+the value must be replaced with the closest real price. this uses remittance tables from epic to estimate these 
+benchmarks for each unique billing code.
+
+not taken into consideration: facility type (FAC_CODE_VAL in CL_RMT_CLM_INFO), payor (link INV_NUM to INV_BASIC_INFO which has CVG_ID which can probably be linked somewhere)
 """
 import pandas as pd, sqlite3, re, numpy as np
 
