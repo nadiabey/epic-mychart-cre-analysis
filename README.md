@@ -1,7 +1,7 @@
 # epic-mychart-cre-analysis
-Analyzing computer-readable exports from Epic MyChart (mine and my family's, with permission). CREs come in a .zip file that expand into two folders: EHITables (tsv files containing data) and EHITables Schema (htm files containing documentation). 
+Analyzing computer-readable exports from Epic MyChart (mine and my family's, with their permission). CREs come in a .zip file that expand into two folders: EHITables (tsv files containing data) and EHITables Schema (htm files containing documentation). 
 
-TSV files were imported into SQL (data-to-sql-db.py) and schema files were compressed into one codebook file (compress-documentation.sh). Exports generally have the same files but tables may be empty and some exports are missing columns for some tables.
+TSV files were imported into SQL (data-to-sql-db.py) and schema files were compressed into one codebook file (compress-documentation.sh). (Schema is also available here: https://open.epic.com/EHITables/GetTable/_index.htm) Exports generally have the same files but tables may be empty and some exports are missing columns for some tables.
 
 Types of identifiers: account ID (billing), patient ID, patient MRN, record ID (claims), etc.
 
