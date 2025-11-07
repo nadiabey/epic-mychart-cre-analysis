@@ -10,7 +10,7 @@ Some significant tables:
 * ACCOUNT, ACCOUNT_2, ACCOUNT_3: patient info, account type, financial class (insurance type), total/self-pay/insurance balance, payment plan details, propensity to pay, time last viewed billing communications, family size, family income
 * CLM_VALUES, CLM_VALUES_2, CLM_VALUES_3, CLM_VALUES_4, CLM_VALUES_5, CLM_VALUE_RECORD: record ID, billing provider NPI/taxonomy, patient MRN, invoice number, total charges, facility type code, frequency code, professional (CMS) or institutional (UB) claim
 * CLAIM_INFO: claim and account info, workers comp or commercial claim, entry date, coverage, admit/discharge date
-* CL_RMT_SVCE_LN_INF: remittance images with billing codes in format [code type]:[code]:[modifier] (i.e. HC:82627:90)
+* CL_RMT_SVCE_LN_INF: remittance images with billing codes in format [code type]:[code]:[modifier] (i.e. HC:82627:90) (SVC_LN_INFO table has similar info)
 * COVERAGE_MEMBER_LIST: what patient is in what plan
 * ORDER_MED: prescriptions, date ordered, dosage, quantity, refills, order setting (inpatient/outpatient)
 * COVERAGE_BENEFITS: OOP max and OOP remaining, deductible met and remaining, coinsurance percent
