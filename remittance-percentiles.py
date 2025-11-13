@@ -7,6 +7,8 @@ the value must be replaced with the closest real price. this uses remittance tab
 benchmarks for each unique billing code.
 
 not taken into consideration: facility type (FAC_CODE_VAL in CL_RMT_CLM_INFO), payor (link INV_NUM to INV_BASIC_INFO which has CVG_ID which can probably be linked somewhere)
+
+update 11/13/25: facility and payor added
 """
 import pandas as pd, sqlite3, re, numpy as np
 
@@ -17,15 +19,19 @@ def nearest(listy, val):
 
 
 # open db
-conn = sqlite3.connect('dbname.db')
+conn = sqlite3.connect('atriumrecords2.db')
 # get remittance image id, code, line item amount, and amount paid toward claim from one table
-# get invoice number, claim code and patient responsibility from other table
+# get invoice number and facility type from other table
 # some remittances have charges removed or insurance denied so drop those
-remit = pd.read_sql("select rmt.image_id, inv_no, proc_identifier, prov_payment_amt "
-                    "from cl_rmt_svce_ln_inf as rmt join cl_rmt_clm_info as clm on rmt.image_id = "
+remit = pd.read_sql("select cvg_id, mailing_name, image_id, inv_no, fac_code_val, proc_identifier, prov_payment_amt "
+                    "from inv_basic_info join (select rmt.image_id, inv_no, fac_code_val, proc_identifier, "
+                    "prov_payment_amt from cl_rmt_svce_ln_inf as rmt join cl_rmt_clm_info as clm on rmt.image_id = "
                     "clm.image_id where inv_no not in (select inv_no from cl_rmt_clm_info where clm_stat_cd_c_name = "
-                    "'Reversal of previous payment' or clm_stat_cd_c_name = 'Denied')", conn)
+                    "'Reversal of previous payment' or clm_stat_cd_c_name = 'Denied')) as claim on "
+                    "inv_basic_info.inv_num = claim.inv_no", conn)
 conn.close()
+# force all column names to uppercase
+remit.columns = [col.upper() for col in remit.columns]
 # payment columns are strings so change to floats
 remit['PROV_PAYMENT_AMT'] = remit['PROV_PAYMENT_AMT'].astype(float)
 # transform code column into three columns (code type, code, modifier)
@@ -43,11 +49,11 @@ remit['code_type'] = code_type
 remit['code'] = code
 remit['modifier'] = modifier
 # simplify columns
-new_cols = remit[['code_type', 'code', 'modifier', 'PROV_PAYMENT_AMT']]
+new_cols = remit[['MAILING_NAME', 'FAC_CODE_VAL', 'code_type', 'code', 'modifier', 'PROV_PAYMENT_AMT']]
 # calculate percentiles and claim counts
-stats = new_cols.groupby(['code_type', 'code', 'modifier'], as_index=False).describe([.1, .5, .9])
+stats = new_cols.groupby(['MAILING_NAME', 'FAC_CODE_VAL', 'code_type', 'code', 'modifier'], as_index=False).describe([.1, .5, .9])
 # group prices
-prices = new_cols.groupby(['code_type', 'code', 'modifier'], as_index=False)['PROV_PAYMENT_AMT'].apply(list)
+prices = new_cols.groupby(['MAILING_NAME', 'FAC_CODE_VAL', 'code_type', 'code', 'modifier'], as_index=False)['PROV_PAYMENT_AMT'].apply(list)
 # check if 10th/median/90th percentile values are real prices
 for i in range(len(stats)):
     payments = prices.iloc[i]['PROV_PAYMENT_AMT'] # list of prices
