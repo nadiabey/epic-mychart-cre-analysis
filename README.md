@@ -23,3 +23,4 @@ Some significant tables:
 Things I've learned during this:
 * Line item charges can often differ for the same billing code.
 * There may be multiple remittance images on the same invoice/encounter.
+* sooo much missing data! (see: 320 claims pulled from remittances vs only 115 of those claims matched to a payor using invoice info)
